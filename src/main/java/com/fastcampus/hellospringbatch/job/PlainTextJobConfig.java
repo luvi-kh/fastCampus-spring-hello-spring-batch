@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class PlainTextJobConfig {
                 .repository(plainTextRepository)
                 .methodName("findBy")
                 .pageSize(5)
-                .arguments(List.of())
+                .arguments(Arrays.asList())
                 .sorts(Collections.singletonMap("id", Sort.Direction.DESC))
                 .build();
     }
@@ -80,6 +81,7 @@ public class PlainTextJobConfig {
     public ItemWriter<String> plainTextWriter() {
         return items -> {
             items.forEach(item -> resultTextRepository.save(new ResultText(null, item)));
+//            items.forEach(System.out::println);
             System.out.println("==== chunk is finished");
         };
     }
